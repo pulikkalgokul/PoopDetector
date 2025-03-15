@@ -11,7 +11,7 @@ import SwiftUI
 struct PoopDetectorApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LaunchView()
         }
     }
 }

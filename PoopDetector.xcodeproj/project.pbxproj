@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4B3344B32D848D73005B0F77 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 4B3344B22D848D73005B0F77 /* GoogleGenerativeAI */; };
+		4B3344B52D848E6E005B0F77 /* GenerativeAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B3344B42D848E6E005B0F77 /* GenerativeAI-Info.plist */; };
+		4B3344BA2D849581005B0F77 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4B3344B82D84957E005B0F77 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4B8B99972D812EAB0092C363 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B3344B42D848E6E005B0F77 /* GenerativeAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GenerativeAI-Info.plist"; sourceTree = "<group>"; };
+		4B3344B82D84957E005B0F77 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		4B8B99862D812EA90092C363 /* PoopDetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoopDetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B8B99962D812EAB0092C363 /* PoopDetectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoopDetectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B8B99A02D812EAB0092C363 /* PoopDetectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoopDetectorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B3344B32D848D73005B0F77 /* GoogleGenerativeAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,10 +84,12 @@
 		4B8B997D2D812EA90092C363 = {
 			isa = PBXGroup;
 			children = (
+				4B3344B42D848E6E005B0F77 /* GenerativeAI-Info.plist */,
 				4B8B99882D812EA90092C363 /* PoopDetector */,
 				4B8B99992D812EAB0092C363 /* PoopDetectorTests */,
 				4B8B99A32D812EAB0092C363 /* PoopDetectorUITests */,
 				4B8B99872D812EA90092C363 /* Products */,
+				4B3344B82D84957E005B0F77 /* .gitignore */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +123,7 @@
 			);
 			name = PoopDetector;
 			packageProductDependencies = (
+				4B3344B22D848D73005B0F77 /* GoogleGenerativeAI */,
 			);
 			productName = PoopDetector;
 			productReference = 4B8B99862D812EA90092C363 /* PoopDetector.app */;
@@ -195,6 +207,9 @@
 			);
 			mainGroup = 4B8B997D2D812EA90092C363;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4B3344B12D848D73005B0F77 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4B8B99872D812EA90092C363 /* Products */;
 			projectDirPath = "";
@@ -212,6 +227,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B3344BA2D849581005B0F77 /* .gitignore in Resources */,
+				4B3344B52D848E6E005B0F77 /* GenerativeAI-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +575,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4B3344B12D848D73005B0F77 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4B3344B22D848D73005B0F77 /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B3344B12D848D73005B0F77 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4B8B997E2D812EA90092C363 /* Project object */;
 }
