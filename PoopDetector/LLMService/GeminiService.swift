@@ -13,7 +13,7 @@ class GeminiService: LLMServiceProtocol {
     private let model: GenerativeModel
     
     init(apiKey: String) {
-        self.model = GenerativeModel(name: "gemini-2.0-flash-exp", apiKey: apiKey)
+        self.model = GenerativeModel(name: "gemini-2.0-flash-exp", apiKey: apiKey, generationConfig: GenerationConfig(responseMIMEType: "application/json"))
     }
     
     @MainActor

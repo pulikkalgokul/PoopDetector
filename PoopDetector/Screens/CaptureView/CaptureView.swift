@@ -11,32 +11,45 @@ import SwiftUI
 struct CaptureView: View {
     @State private var viewModel = ViewModel()
     var body: some View {
-        switch viewModel.viewState {
-        case .initial:
-            initialView
-        case .analyzing:
-            ProgressView("Analyzing...")
-        case let .result(analysis):
-            ZStack {
-                ScatAnalysisResultView(
-                    selectedImage: viewModel.selectedImage!, analysis: analysis
-                )
-                VStack {
-                    Spacer()
-                    Button(action: {
-                        viewModel.viewState = .initial
-                    }, label: {
-                        Label("Scan Again", systemImage: "repeat")
-                            .bold()
-                            .padding()
-                            .foregroundStyle(.white)
-                            .background(.indigo)
-                            .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                    })
+        VStack {
+            switch viewModel.viewState {
+            case .initial:
+                initialView
+            case .analyzing:
+                ProgressView("Analyzing...")
+            case let .result(analysis):
+                ZStack {
+                    ScatAnalysisResultView(
+                        selectedImage: Image(uiImage: viewModel.selectedImage), analysis: analysis
+                    )
+                    VStack {
+                        Spacer()
+                        Button(action: {
+                            viewModel.viewState = .initial
+                        }, label: {
+                            Label("Scan Again", systemImage: "repeat")
+                                .bold()
+                                .padding()
+                                .foregroundStyle(.white)
+                                .background(.indigo)
+                                .clipShape(RoundedRectangle(cornerRadius: 20.0))
+                        })
+                    }
                 }
+            case let .failed(error):
+                Text(error.localizedDescription)
             }
-        case let .failed(error):
-            Text(error.localizedDescription)
+        }
+        .sheet(isPresented: $viewModel.showPhotoPickerSheet) {
+            ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.selectedImage)
+        }
+        .sheet(isPresented: $viewModel.showPhotoPickerSheetWithCamera) {
+            ImagePicker(sourceType: .camera, selectedImage: $viewModel.selectedImage)
+        }
+        .onChange(of: viewModel.selectedImage) { _, _ in
+            Task {
+                await viewModel.analyze()
+            }
         }
     }
 
@@ -48,24 +61,26 @@ struct CaptureView: View {
                 .frame(width: 200, height: 200)
             Text("Let's Scan Some Shit")
                 .font(.title)
-            PhotosPicker(selection: $viewModel.selectedItem, matching: .images) {
-                Label("Select Photo", systemImage: "photo")
+            Menu(content: {
+                Button(action: {
+                    viewModel.showPhotoPickerSheet = true
+                }) {
+                    Label("Choose from Library", systemImage: "photo.on.rectangle")
+                }
+
+                Button(action: {
+                    viewModel.showPhotoPickerSheetWithCamera = true
+                }) {
+                    Label("Take Photo", systemImage: "camera")
+                }
+            }, label: {
+                Label("Click", systemImage: "photo")
                     .bold()
                     .padding()
                     .foregroundStyle(.white)
                     .background(.indigo)
                     .clipShape(RoundedRectangle(cornerRadius: 20.0))
-            }
-        }
-        .onChange(of: viewModel.selectedItem) { _, newItem in
-            Task {
-                if let loadedImage = try? await newItem?.loadTransferable(type: Data.self),
-                   let uimg = UIImage(data: loadedImage)
-                {
-                    viewModel.selectedImage = Image(uiImage: uimg)
-                    await viewModel.analyze()
-                }
-            }
+            })
         }
     }
 }

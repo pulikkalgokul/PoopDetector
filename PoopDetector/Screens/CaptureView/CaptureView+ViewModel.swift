@@ -20,21 +20,20 @@ extension CaptureView {
     class ViewModel {
         private let llmService: LLMServiceProtocol
         var selectedItem: PhotosPickerItem?
-        var selectedImage: Image?
+        var selectedImage = UIImage()
 
         var viewState: ViewState = .initial
+        var showPhotoPickerSheetWithCamera = false
+        var showPhotoPickerSheet = false
 
         init(llmService: LLMServiceProtocol = MockLLMService()) {
             self.llmService = llmService
         }
 
         func analyze() async {
-            guard let image = selectedImage else {
-                return
-            }
             viewState = .analyzing
             do {
-                let analyzedResult = try await llmService.analyzeImage(image)
+                let analyzedResult = try await llmService.analyzeImage(Image(uiImage: selectedImage))
                 viewState = .result(analyzedResult)
             } catch {
                 print(error.localizedDescription)
