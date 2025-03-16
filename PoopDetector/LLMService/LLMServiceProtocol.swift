@@ -14,5 +14,5 @@ enum LLMError: Error {
 }
 
 protocol LLMServiceProtocol {
-    func analyzeImage(_ image: Image) async throws -> ScatAnalysis
+    func analyzeImage(_ image: UIImage) async throws -> ScatAnalysis
 }

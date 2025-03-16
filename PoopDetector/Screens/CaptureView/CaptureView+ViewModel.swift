@@ -19,7 +19,6 @@ extension CaptureView {
     @Observable
     class ViewModel {
         private let llmService: LLMServiceProtocol
-        var selectedItem: PhotosPickerItem?
         var selectedImage = UIImage()
 
         var viewState: ViewState = .initial
@@ -33,7 +32,7 @@ extension CaptureView {
         func analyze() async {
             viewState = .analyzing
             do {
-                let analyzedResult = try await llmService.analyzeImage(Image(uiImage: selectedImage))
+                let analyzedResult = try await llmService.analyzeImage(selectedImage)
                 viewState = .result(analyzedResult)
             } catch {
                 print(error.localizedDescription)

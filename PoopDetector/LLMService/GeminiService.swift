@@ -17,13 +17,7 @@ class GeminiService: LLMServiceProtocol {
     }
     
     @MainActor
-    func analyzeImage(_ image: Image) async throws -> ScatAnalysis {
-        let imageRenderer = ImageRenderer(content: image)
-        imageRenderer.scale = 1.0
-        
-        guard let uiImage = imageRenderer.uiImage else {
-            throw LLMError.invalidResponse
-        }
+    func analyzeImage(_ image: UIImage) async throws -> ScatAnalysis {
         
         let prompt = """
         You are an expert in wildlife biology and animal tracking. Given an image of scat, analyze its characteristics such as size, shape, color, consistency, and contents (e.g., fur, seeds, bones). Then, return a JSON object following this structure:
@@ -40,7 +34,7 @@ class GeminiService: LLMServiceProtocol {
         Consider regional wildlife when suggesting animals. Provide the most accurate matches based on known scat identification principles.
         """
         
-        let response = try await model.generateContent(prompt, uiImage)
+        let response = try await model.generateContent(prompt, image)
         
         guard let jsonString = response.text else {
             throw LLMError.invalidResponse
