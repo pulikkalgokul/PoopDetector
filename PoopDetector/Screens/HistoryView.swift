@@ -10,20 +10,22 @@ import SwiftUI
 
 @MainActor
 struct HistoryView: View {
-    @Query(sort: \ScatAnalysis.timestamp, order: .reverse) private var scatAnalyses: [ScatAnalysis]
+    @Query(sort: \HistoryEntry.timestamp, order: .reverse) private var historyEntry: [HistoryEntry]
 
     var body: some View {
         NavigationView {
-            if scatAnalyses.isEmpty {
-                ContentUnavailableView("No Scans Yet",
+            if historyEntry.isEmpty {
+                ContentUnavailableView(
+                    "No Scans Yet",
                     systemImage: "magnifyingglass",
-                    description: Text("Your scat analysis history will appear here"))
+                    description: Text("Your scat analysis history will appear here")
+                )
             } else {
-                List(scatAnalyses) { analysis in
+                List(historyEntry) { entry in
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(analysis.scatDescription)
+                        Text(entry.analyzedResult.scatDescription)
                             .font(.headline)
-                        ForEach(analysis.matchingAnimals) { animal in
+                        ForEach(entry.analyzedResult.matchingAnimals) { animal in
                             Text("• \(animal.animalName) (\(animal.scientificName))")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
