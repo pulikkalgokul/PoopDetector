@@ -9,6 +9,7 @@ import Foundation
 import GoogleGenerativeAI
 import Observation
 import PhotosUI
+import SwiftData
 import SwiftUI
 
 // MARK: - CaptureView.ViewModel
@@ -24,6 +25,7 @@ extension CaptureView {
         var viewState: ViewState = .initial
         var showPhotoPickerSheetWithCamera = false
         var showPhotoPickerSheet = false
+        var modelContext: ModelContext?
 
         init(llmService: LLMServiceProtocol = MockLLMService()) {
             self.llmService = llmService
@@ -34,6 +36,8 @@ extension CaptureView {
             do {
                 let analyzedResult = try await llmService.analyzeImage(selectedImage)
                 viewState = .result(analyzedResult)
+                modelContext?.insert(analyzedResult)
+                try? modelContext?.save()
             } catch {
                 print(error.localizedDescription)
             }

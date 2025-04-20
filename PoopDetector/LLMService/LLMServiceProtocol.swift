@@ -13,6 +13,6 @@ enum LLMError: Error {
     case apiError(String)
 }
 
-protocol LLMServiceProtocol {
+protocol LLMServiceProtocol: Sendable {
     func analyzeImage(_ image: UIImage) async throws -> ScatAnalysis
 }

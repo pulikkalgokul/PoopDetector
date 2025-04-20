@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class MockLLMService: LLMServiceProtocol {
+actor MockLLMService: LLMServiceProtocol {
     func analyzeImage(_ image: UIImage) async throws -> ScatAnalysis {
         // Simulating network delay
         try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)
@@ -28,5 +28,3 @@ class MockLLMService: LLMServiceProtocol {
         )
     }
 }
-
-// End of file

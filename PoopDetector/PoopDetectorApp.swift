@@ -5,6 +5,7 @@
 //  Created by Gokul P on 3/11/25.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -13,5 +14,6 @@ struct PoopDetectorApp: App {
         WindowGroup {
             LaunchView()
         }
+        .modelContainer(for: ScatAnalysis.self)
     }
 }

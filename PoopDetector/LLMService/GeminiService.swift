@@ -7,9 +7,9 @@
 
 import Foundation
 import SwiftUI
-import GoogleGenerativeAI
+@preconcurrency import GoogleGenerativeAI
 
-class GeminiService: LLMServiceProtocol {
+actor GeminiService: LLMServiceProtocol {
     private let model: GenerativeModel
     
     init(apiKey: String) {

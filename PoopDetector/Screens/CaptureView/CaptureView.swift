@@ -8,7 +8,9 @@
 import PhotosUI
 import SwiftUI
 
+@MainActor
 struct CaptureView: View {
+    @Environment(\.modelContext) var modelContext
     @State private var viewModel = ViewModel()
     var body: some View {
         VStack {
@@ -45,6 +47,9 @@ struct CaptureView: View {
         }
         .sheet(isPresented: $viewModel.showPhotoPickerSheetWithCamera) {
             ImagePicker(sourceType: .camera, selectedImage: $viewModel.selectedImage)
+        }
+        .onAppear {
+            viewModel.modelContext = modelContext
         }
         .onChange(of: viewModel.selectedImage) { _, _ in
             Task {
