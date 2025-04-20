@@ -17,7 +17,7 @@ actor GeminiService: LLMServiceProtocol {
     }
     
     @MainActor
-    func analyzeImage(_ image: UIImage) async throws -> ScatAnalysis {
+    func analyzeImage(_ image: UIImage) async throws -> ScatAnalysisLLMResponse {
         
         let prompt = """
         You are an expert in wildlife biology and animal tracking. Given an image of scat, analyze its characteristics such as size, shape, color, consistency, and contents (e.g., fur, seeds, bones). Then, return a JSON object following this structure:
@@ -44,7 +44,7 @@ actor GeminiService: LLMServiceProtocol {
         let decoder = JSONDecoder()
         
         do {
-            return try decoder.decode(ScatAnalysis.self, from: jsonData)
+            return try decoder.decode(ScatAnalysisLLMResponse.self, from: jsonData)
         } catch {
             throw LLMError.apiError("Failed to parse response: \(error.localizedDescription)")
         }

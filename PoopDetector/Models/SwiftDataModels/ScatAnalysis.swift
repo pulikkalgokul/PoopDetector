@@ -32,4 +32,10 @@ final class ScatAnalysis: Decodable {
         case scatDescription
         case matchingAnimals
     }
+    
+    init(scatAnalysisDTO: ScatAnalysisLLMResponse) {
+        self.scatDescription = scatAnalysisDTO.scatDescription
+        self.matchingAnimals = scatAnalysisDTO.matchingAnimals.map { MatchingAnimal(matchingAnimalsDTO: $0) }
+        self.timestamp = Date()
+    }
 }

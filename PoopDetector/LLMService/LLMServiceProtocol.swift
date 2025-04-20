@@ -14,5 +14,5 @@ enum LLMError: Error {
 }
 
 protocol LLMServiceProtocol: Sendable {
-    func analyzeImage(_ image: UIImage) async throws -> ScatAnalysis
+    func analyzeImage(_ image: UIImage) async throws -> ScatAnalysisLLMResponse
 }

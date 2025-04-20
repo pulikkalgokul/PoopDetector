@@ -10,6 +10,7 @@
 		4B3344B32D848D73005B0F77 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 4B3344B22D848D73005B0F77 /* GoogleGenerativeAI */; };
 		4B3344B52D848E6E005B0F77 /* GenerativeAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B3344B42D848E6E005B0F77 /* GenerativeAI-Info.plist */; };
 		4B3344BA2D849581005B0F77 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4B3344B82D84957E005B0F77 /* .gitignore */; };
+		4B7AFFBC2DB54CEB00DDCA3C /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +38,25 @@
 		4B8B99A02D812EAB0092C363 /* PoopDetectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoopDetectorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4B7AFFB92DB54CCD00DDCA3C /* Exceptions for "Packages" folder in "PoopDetector" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				NetworkLayer,
+			);
+			target = 4B8B99852D812EA90092C363 /* PoopDetector */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4B7AFFB72DB54CB900DDCA3C /* Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4B7AFFB92DB54CCD00DDCA3C /* Exceptions for "Packages" folder in "PoopDetector" target */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		4B8B99882D812EA90092C363 /* PoopDetector */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PoopDetector;
@@ -61,6 +80,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B3344B32D848D73005B0F77 /* GoogleGenerativeAI in Frameworks */,
+				4B7AFFBC2DB54CEB00DDCA3C /* NetworkLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,15 +101,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B7AFFBA2DB54CEB00DDCA3C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4B8B997D2D812EA90092C363 = {
 			isa = PBXGroup;
 			children = (
+				4B7AFFB72DB54CB900DDCA3C /* Packages */,
 				4B3344B42D848E6E005B0F77 /* GenerativeAI-Info.plist */,
 				4B8B99882D812EA90092C363 /* PoopDetector */,
 				4B8B99992D812EAB0092C363 /* PoopDetectorTests */,
 				4B8B99A32D812EAB0092C363 /* PoopDetectorUITests */,
 				4B8B99872D812EA90092C363 /* Products */,
 				4B3344B82D84957E005B0F77 /* .gitignore */,
+				4B7AFFBA2DB54CEB00DDCA3C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,11 +148,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				4B7AFFB72DB54CB900DDCA3C /* Packages */,
 				4B8B99882D812EA90092C363 /* PoopDetector */,
 			);
 			name = PoopDetector;
 			packageProductDependencies = (
 				4B3344B22D848D73005B0F77 /* GoogleGenerativeAI */,
+				4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */,
 			);
 			productName = PoopDetector;
 			productReference = 4B8B99862D812EA90092C363 /* PoopDetector.app */;
@@ -594,6 +625,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4B3344B12D848D73005B0F77 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
 			productName = GoogleGenerativeAI;
+		};
+		4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkLayer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

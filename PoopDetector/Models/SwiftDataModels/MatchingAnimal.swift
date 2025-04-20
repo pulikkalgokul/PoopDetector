@@ -32,4 +32,9 @@ final class MatchingAnimal: Decodable {
         case animalName
         case scientificName
     }
+    
+    init(matchingAnimalsDTO: MatchingAnimalsLLMResponse) {
+        self.animalName = matchingAnimalsDTO.animalName
+        self.scientificName = matchingAnimalsDTO.scientificName
+    }
 }

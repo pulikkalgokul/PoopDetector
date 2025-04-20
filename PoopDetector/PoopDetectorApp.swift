@@ -14,6 +14,6 @@ struct PoopDetectorApp: App {
         WindowGroup {
             LaunchView()
         }
-        .modelContainer(for: ScatAnalysis.self)
+        .modelContainer(for: HistoryEntry.self)
     }
 }

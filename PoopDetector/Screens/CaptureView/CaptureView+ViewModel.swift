@@ -19,7 +19,8 @@ extension CaptureView {
     @MainActor
     @Observable
     class ViewModel {
-        private let llmService: LLMServiceProtocol
+        private let llmService: any LLMServiceProtocol
+        private let wikiService: any WikiServiceProtocol
         var selectedImage = UIImage()
 
         var viewState: ViewState = .initial
@@ -27,20 +28,45 @@ extension CaptureView {
         var showPhotoPickerSheet = false
         var modelContext: ModelContext?
 
-        init(llmService: LLMServiceProtocol = MockLLMService()) {
+        init(
+            llmService: any LLMServiceProtocol = MockLLMService(),
+            wikiService: any WikiServiceProtocol = DefaultWikiService()
+        ) {
             self.llmService = llmService
+            self.wikiService = wikiService
         }
 
         func analyze() async {
             viewState = .analyzing
             do {
-                let analyzedResult = try await llmService.analyzeImage(selectedImage)
-                viewState = .result(analyzedResult)
-                modelContext?.insert(analyzedResult)
-                try? modelContext?.save()
+                let analyzedResultDTO = try await llmService.analyzeImage(selectedImage)
+                if let matchingAnimal = analyzedResultDTO.matchingAnimals.first {
+                    let wikiResponseDTO = try await wikiService.wikiData(for: matchingAnimal.scientificName)
+                    modelContext?.insert(
+                        createHistoryEntry(
+                            selectedImage: selectedImage,
+                            analyzedResultDTO: analyzedResultDTO,
+                            wikiResponseDTO: wikiResponseDTO
+                        )
+                    )
+                }
             } catch {
                 print(error.localizedDescription)
             }
+        }
+
+        private func createHistoryEntry(
+            selectedImage: UIImage,
+            analyzedResultDTO: ScatAnalysisLLMResponse,
+            wikiResponseDTO: WikiAPIResponseDTO
+        ) -> HistoryEntry {
+            let scatAnalysis = ScatAnalysis(scatAnalysisDTO: analyzedResultDTO)
+            let wikiResponse = WikiResponse(wikiResponseDTO: wikiResponseDTO)
+            return HistoryEntry(
+                imageData: selectedImage.jpegData(compressionQuality: 0.8),
+                analyzedResult: scatAnalysis,
+                wikiResponse: wikiResponse
+            )
         }
     }
 }
