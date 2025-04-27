@@ -21,9 +21,9 @@ struct CaptureView: View {
                 ProgressView("Analyzing...")
             case let .result(analysis):
                 ZStack {
-                    ScatAnalysisResultView(
-                        selectedImage: Image(uiImage: viewModel.selectedImage), analysis: analysis
-                    )
+                    ScrollView {
+                        ScanResultView(entry: analysis)
+                    }
                     VStack {
                         Spacer()
                         Button(action: {

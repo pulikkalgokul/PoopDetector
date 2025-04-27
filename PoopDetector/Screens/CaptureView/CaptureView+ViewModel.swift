@@ -40,33 +40,65 @@ extension CaptureView {
             viewState = .analyzing
             do {
                 let analyzedResultDTO = try await llmService.analyzeImage(selectedImage)
-                if let matchingAnimal = analyzedResultDTO.matchingAnimals.first {
-                    let wikiResponseDTO = try await wikiService.wikiData(for: matchingAnimal.scientificName)
-                    modelContext?.insert(
-                        createHistoryEntry(
-                            selectedImage: selectedImage,
-                            analyzedResultDTO: analyzedResultDTO,
-                            wikiResponseDTO: wikiResponseDTO
-                        )
+                let matchingAnimals = await getWikiStream(
+                    animals: analyzedResultDTO.matchingAnimals
+                )
+                modelContext?.insert(
+                    createHistoryEntry(
+                        selectedImage: selectedImage,
+                        analyzedResultDTO: analyzedResultDTO,
+                        matchingAnimals: matchingAnimals
                     )
-                }
+                )
+                viewState = .result(AnalysisResult(analyzedResult: analyzedResultDTO, matchingAnimals: matchingAnimals))
             } catch {
                 print(error.localizedDescription)
             }
         }
 
+        private func getWikiStream(
+            animals: [MatchingAnimalsLLMResponse]
+        ) async -> [WikiAPIResponseDTO] {
+            var wikiResponses: [WikiAPIResponseDTO] = []
+            for await (_, wiki) in wikiDataStream(for: animals) where wiki != nil {
+                wikiResponses.append(wiki!)
+            }
+            return wikiResponses
+        }
+
         private func createHistoryEntry(
             selectedImage: UIImage,
             analyzedResultDTO: ScatAnalysisLLMResponse,
-            wikiResponseDTO: WikiAPIResponseDTO
+            matchingAnimals: [WikiAPIResponseDTO]
         ) -> HistoryEntry {
             let scatAnalysis = ScatAnalysis(scatAnalysisDTO: analyzedResultDTO)
-            let wikiResponse = WikiResponse(wikiResponseDTO: wikiResponseDTO)
+            let matchingAnimals = matchingAnimals.map { WikiResponse(wikiResponseDTO: $0) }
             return HistoryEntry(
                 imageData: selectedImage.jpegData(compressionQuality: 0.8),
                 analyzedResult: scatAnalysis,
-                wikiResponse: wikiResponse
+                matchingAnimals: matchingAnimals
             )
+        }
+
+        func wikiDataStream(
+            for animals: [MatchingAnimalsLLMResponse]
+        ) -> AsyncStream<(
+            MatchingAnimalsLLMResponse,
+            WikiAPIResponseDTO?
+        )> {
+            AsyncStream { continuation in
+                Task {
+                    for animal in animals {
+                        do {
+                            let wikiAPIResponseDTO = try await wikiService.wikiData(for: animal.scientificName)
+                            continuation.yield((animal, wikiAPIResponseDTO))
+                        } catch {
+                            continuation.yield((animal, nil))
+                        }
+                    }
+                    continuation.finish()
+                }
+            }
         }
     }
 }
@@ -74,6 +106,6 @@ extension CaptureView {
 enum ViewState {
     case initial
     case analyzing
-    case result(ScatAnalysis)
+    case result(AnalysisResult)
     case failed(Error)
 }

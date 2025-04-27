@@ -1,27 +1,25 @@
 //
-//  HistoryEntry.swift
+//  AnalysisResult.swift
 //  PoopDetector
 //
-//  Created by Gokul P on 4/20/25.
+//  Created by Gokul P on 4/21/25.
 //
 
 import Foundation
-import SwiftData
 
-@Model
-final class HistoryEntry {
+struct AnalysisResult {
     var id: UUID
     var timestamp: Date
     var imageData: Data?
-    var analyzedResult: ScatAnalysis
-    var matchingAnimals: [WikiResponse]? = []
+    var analyzedResult: ScatAnalysisLLMResponse
+    var matchingAnimals: [WikiAPIResponseDTO]? = []
     
     init(
         id: UUID = UUID(),
         timestamp: Date = Date(),
         imageData: Data? = nil,
-        analyzedResult: ScatAnalysis,
-        matchingAnimals: [WikiResponse]? = []
+        analyzedResult: ScatAnalysisLLMResponse,
+        matchingAnimals: [WikiAPIResponseDTO]? = []
     ) {
         self.id = id
         self.timestamp = timestamp
