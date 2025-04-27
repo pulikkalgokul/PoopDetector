@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol WikiServiceProtocol {
+protocol WikiServiceProtocol: Sendable {
     func wikiData(for scientificName: String) async throws -> WikiAPIResponseDTO
 }
