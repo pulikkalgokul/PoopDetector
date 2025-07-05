@@ -1,1 +1,9 @@
 GenerativeAI-Info.plist
+
+# Xcode user-specific files
+*.xcuserstate
+*.xcuserdatad
+xcuserdata/
+
+# SwiftPM user-specific files
+**/.swiftpm/xcode/xcuserdata/
