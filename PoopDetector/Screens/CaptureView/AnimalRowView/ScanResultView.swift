@@ -48,8 +48,8 @@ struct ScanResultView: View {
                 }
             }
         }
-        .padding()
-        .background(Color(.systemBackground))
+        .padding(.horizontal)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
