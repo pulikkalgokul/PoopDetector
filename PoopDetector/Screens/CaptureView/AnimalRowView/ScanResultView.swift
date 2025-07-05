@@ -83,6 +83,6 @@ struct AnimalMatchCard: View {
     }
 }
 
-// #Preview {
-//    ScanResultView()
-// }
+#Preview {
+    ScanResultView(entry: ScanResultMockData.sampleAnalysisResult)
+}
