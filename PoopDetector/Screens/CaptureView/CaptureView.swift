@@ -51,13 +51,24 @@ struct CaptureView: View {
     }
 
     var initialView: some View {
-        VStack {
-            Image("poopImage")
+        VStack(spacing: 40) {
+            VStack(spacing: 16) {
+                Text("Who Did the")
+                    .font(.system(size: 48, weight: .bold))
+                    .foregroundColor(.brown)
+                Text("DooDoo?")
+                    .font(.system(size: 48, weight: .bold))
+                    .foregroundColor(.brown)
+            }
+            
+            Image("pandaMain")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 200)
-            Text("Let's Scan Some Shit")
-                .font(.title)
+                .frame(width: 280, height: 280)
+                .background(Color.white.opacity(0.9))
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .shadow(radius: 10)
+            
             Menu(content: {
                 Button(action: {
                     viewModel.showPhotoPickerSheet = true
@@ -71,14 +82,35 @@ struct CaptureView: View {
                     Label("Take Photo", systemImage: "camera")
                 }
             }, label: {
-                Label("Click", systemImage: "photo")
-                    .bold()
-                    .padding()
-                    .foregroundStyle(.white)
-                    .background(.indigo)
-                    .clipShape(RoundedRectangle(cornerRadius: 20.0))
+                HStack {
+                    Image(systemName: "camera.fill")
+                        .font(.title2)
+                    Text("Detect the Scat!")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 32)
+                .padding(.vertical, 16)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+                .shadow(color: .orange.opacity(0.3), radius: 8, x: 0, y: 4)
             })
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.yellow.opacity(0.6)]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
     }
 }
 
