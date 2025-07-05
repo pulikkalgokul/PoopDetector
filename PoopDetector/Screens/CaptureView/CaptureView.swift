@@ -12,34 +12,21 @@ import SwiftUI
 struct CaptureView: View {
     @Environment(\.modelContext) var modelContext
     @State private var viewModel = ViewModel()
+    
     var body: some View {
-        VStack {
-            switch viewModel.viewState {
-            case .initial:
-                initialView
-            case .analyzing:
-                ProgressView("Analyzing...")
-            case let .result(analysis):
-                ZStack {
-                    ScrollView {
-                        ScanResultView(entry: analysis)
-                    }
-                    VStack {
-                        Spacer()
-                        Button(action: {
-                            viewModel.viewState = .initial
-                        }, label: {
-                            Label("Scan Again", systemImage: "repeat")
-                                .bold()
-                                .padding()
-                                .foregroundStyle(.white)
-                                .background(.indigo)
-                                .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        })
-                    }
+        NavigationStack(path: $viewModel.navigationPath) {
+            VStack {
+                switch viewModel.viewState {
+                case .initial:
+                    initialView
+                case .analyzing:
+                    ProgressView("Analyzing...")
+                case let .failed(error):
+                    Text(error.localizedDescription)
                 }
-            case let .failed(error):
-                Text(error.localizedDescription)
+            }
+            .navigationDestination(for: AnalysisResult.self) { analysis in
+                ScanResultView(entry: analysis)
             }
         }
         .sheet(isPresented: $viewModel.showPhotoPickerSheet) {
@@ -54,6 +41,11 @@ struct CaptureView: View {
         .onChange(of: viewModel.selectedImage) { _, _ in
             Task {
                 await viewModel.analyze()
+            }
+        }
+        .onChange(of: viewModel.navigationPath) { _, newPath in
+            if newPath.isEmpty {
+                viewModel.viewState = .initial
             }
         }
     }

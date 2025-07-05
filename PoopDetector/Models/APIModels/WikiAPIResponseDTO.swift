@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WikiAPIResponseDTO: Decodable {
+struct WikiAPIResponseDTO: Decodable, Hashable {
     let title: String
     let thumbnail: ImageInfoDTO
     let originalImage: ImageInfoDTO
@@ -23,17 +23,17 @@ struct WikiAPIResponseDTO: Decodable {
     }
 }
 
-struct ImageInfoDTO: Decodable {
+struct ImageInfoDTO: Decodable, Hashable {
     let source: String
     let width: Int
     let height: Int
 
 }
 
-struct ContentURLInfoDTO: Decodable {
+struct ContentURLInfoDTO: Decodable, Hashable {
     var mobile: ReferenceDTO
 }
 
-struct ReferenceDTO: Decodable {
+struct ReferenceDTO: Decodable, Hashable {
     let page: String
 }

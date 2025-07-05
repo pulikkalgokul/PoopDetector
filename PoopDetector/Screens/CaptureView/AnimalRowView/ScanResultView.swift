@@ -10,46 +10,46 @@ import SwiftUI
 struct ScanResultView: View {
     let entry: AnalysisResult
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            if let imageData = entry.imageData,
-               let uiImage = UIImage(data: imageData)
-            {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 200)
-                    .cornerRadius(12)
-            }
-
-            VStack(alignment: .leading, spacing: 8) {
-                Text(entry.formattedDate)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-
-                Text(entry.analyzedResult.scatDescription)
-                    .font(.body)
-            }
-
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Matching Animals")
-                    .font(.headline)
-
-                if let matchingAnimals = entry.matchingAnimals, !matchingAnimals.isEmpty {
-                    ForEach(matchingAnimals, id: \.title) { animal in
-                        AnimalMatchCard(animal: animal)
-                            .transition(.scale.combined(with: .opacity))
-                    }
-                } else {
-                    Text("Searching for matching animals...")
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                if let imageData = entry.imageData,
+                   let uiImage = UIImage(data: imageData)
+                {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 200)
+                        .cornerRadius(12)
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(entry.formattedDate)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                    
+                    Text(entry.analyzedResult.scatDescription)
+                        .font(.body)
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Matching Animals")
+                        .font(.headline)
+                    
+                    if let matchingAnimals = entry.matchingAnimals, !matchingAnimals.isEmpty {
+                        ForEach(matchingAnimals, id: \.title) { animal in
+                            AnimalMatchCard(animal: animal)
+                                .transition(.scale.combined(with: .opacity))
+                        }
+                    } else {
+                        Text("Searching for matching animals...")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
         }
         .padding()
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(radius: 5)
     }
 }
 

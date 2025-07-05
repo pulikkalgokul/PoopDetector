@@ -24,6 +24,7 @@ extension CaptureView {
         var selectedImage = UIImage()
 
         var viewState: ViewState = .initial
+        var navigationPath = NavigationPath()
         var showPhotoPickerSheetWithCamera = false
         var showPhotoPickerSheet = false
         var modelContext: ModelContext?
@@ -50,9 +51,11 @@ extension CaptureView {
                         matchingAnimals: matchingAnimals
                     )
                 )
-                viewState = .result(AnalysisResult(analyzedResult: analyzedResultDTO, matchingAnimals: matchingAnimals))
+                let analysisResult = AnalysisResult(analyzedResult: analyzedResultDTO, matchingAnimals: matchingAnimals)
+                navigationPath.append(analysisResult)
+                viewState = .initial
             } catch {
-                print(error.localizedDescription)
+                viewState = .failed(error)
             }
         }
 
@@ -106,6 +109,5 @@ extension CaptureView {
 enum ViewState {
     case initial
     case analyzing
-    case result(AnalysisResult)
     case failed(Error)
 }

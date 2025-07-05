@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MatchingAnimalsLLMResponse: Decodable {
+struct MatchingAnimalsLLMResponse: Decodable, Hashable {
     var animalName: String
     var scientificName: String
 }
