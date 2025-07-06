@@ -15,19 +15,11 @@ struct PandaInvestigatingScreen: View {
             Color.lightYellowBackground
                 .ignoresSafeArea()
 
-            VStack(spacing: 20) {
-                VStack(spacing: 16) {
-                    Text("Investigating")
-                        .font(.system(size: 36, weight: .bold))
-                        .foregroundColor(.brown)
-                    Text(viewModel.currentLine)
-                        .font(.system(size: 24, weight: .medium))
-                        .foregroundColor(.brown.opacity(0.8))
-                        .multilineTextAlignment(.center)
-                        .animation(.easeInOut(duration: 0.3), value: viewModel.currentLine)
-                }
-
-                HStack {
+            VStack(spacing: 30) {
+                Text("Investigating")
+                    .font(.system(size: 36, weight: .bold))
+                    .foregroundColor(.brown)
+                HStack(spacing: 0) {
                     Image("analysingImage")
                         .resizable()
                         .scaledToFit()
@@ -38,6 +30,11 @@ struct PandaInvestigatingScreen: View {
                         PawPrintAnimation(isAnimating: $viewModel.isAnimating)
                     }
                 }
+                Text(viewModel.currentLine)
+                    .font(.system(size: 24, weight: .medium))
+                    .foregroundColor(.brown.opacity(0.8))
+                    .multilineTextAlignment(.center)
+                    .animation(.easeInOut(duration: 0.3), value: viewModel.currentLine)
             }
             .padding(.horizontal)
         }

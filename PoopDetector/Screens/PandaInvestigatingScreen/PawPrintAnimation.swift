@@ -11,8 +11,6 @@ import SwiftUI
 struct PawPrintAnimation: View {
     @Binding var isAnimating: Bool
     @State private var pawOpacities: [Double] = [0, 0, 0, 0]
-
-    let timer = Timer.publish(every: 0.4, on: .main, in: .common).autoconnect()
     @State private var currentPaw = 0
 
     var body: some View {
@@ -26,18 +24,15 @@ struct PawPrintAnimation: View {
                     .animation(.easeInOut(duration: 0.3), value: pawOpacities[index])
             }
         }
-        .onReceive(timer) { _ in
-            if isAnimating {
-                // Fade out all paws
-                pawOpacities = [0, 0, 0, 0]
-                // Fade in current paw
-                pawOpacities[currentPaw] = 1.0
-                // Move to next paw
-                currentPaw = (currentPaw + 1) % 3
+        .task {
+            while true {
+                if isAnimating {
+                    pawOpacities = [0, 0, 0, 0]
+                    pawOpacities[currentPaw] = 1.0
+                    currentPaw = (currentPaw + 1) % pawOpacities.count
+                }
+                try? await Task.sleep(nanoseconds: 400_000_000)
             }
-        }
-        .onDisappear {
-            timer.upstream.connect().cancel()
         }
     }
 }
