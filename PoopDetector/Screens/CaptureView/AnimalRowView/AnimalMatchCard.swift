@@ -17,7 +17,7 @@ struct AnimalMatchCard: View {
                 AsyncImage(url: imageURL) { image in
                     image
                         .resizable()
-                        .scaledToFill()
+                        .scaledToFit()
                 } placeholder: {
                     ProgressView()
                         .frame(height: 200)

@@ -61,6 +61,7 @@ struct CaptureView: View {
                 viewModel.viewState = .initial
             }
         }
+        .tint(.black)
     }
 
     var initialView: some View {
