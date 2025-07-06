@@ -35,7 +35,7 @@ struct ScanResultView: View {
 
                     if let matchingAnimals = entry.matchingAnimals, !matchingAnimals.isEmpty {
                         ForEach(matchingAnimals, id: \.title) { animal in
-                            NavigationLink(value: animal) {
+                            NavigationLink(destination: AnimalDetailView(animal: animal)) {
                                 AnimalMatchCard(animal: animal)
                             }
                             .buttonStyle(PlainButtonStyle())
