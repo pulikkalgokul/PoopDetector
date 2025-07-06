@@ -28,6 +28,9 @@ struct CaptureView: View {
             .navigationDestination(for: AnalysisResult.self) { analysis in
                 ScanResultView(entry: analysis)
             }
+            .navigationDestination(for: WikiAPIResponseDTO.self) { animal in
+                AnimalDetailView(animal: animal)
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

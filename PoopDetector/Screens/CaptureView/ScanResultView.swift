@@ -35,8 +35,11 @@ struct ScanResultView: View {
 
                     if let matchingAnimals = entry.matchingAnimals, !matchingAnimals.isEmpty {
                         ForEach(matchingAnimals, id: \.title) { animal in
-                            AnimalMatchCard(animal: animal)
-                                .transition(.scale.combined(with: .opacity))
+                            NavigationLink(value: animal) {
+                                AnimalMatchCard(animal: animal)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .transition(.scale.combined(with: .opacity))
                         }
                     } else {
                         Text("Searching for matching animals...")
