@@ -28,6 +28,16 @@ struct CaptureView: View {
             .navigationDestination(for: AnalysisResult.self) { analysis in
                 ScanResultView(entry: analysis)
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: HistoryView()) {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .font(.title2)
+                            .foregroundColor(.brown)
+                    }
+                }
+            }
         }
         .sheet(isPresented: $viewModel.showPhotoPickerSheet) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.selectedImage)

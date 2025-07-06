@@ -12,7 +12,7 @@ import SwiftUI
 struct PoopDetectorApp: App {
     var body: some Scene {
         WindowGroup {
-            LaunchView()
+            CaptureView()
         }
         .modelContainer(for: HistoryEntry.self)
     }
