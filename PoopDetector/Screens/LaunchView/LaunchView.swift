@@ -19,7 +19,7 @@ struct LaunchView: View {
 
             HistoryView()
                 .tabItem {
-                    Label("Explore", systemImage: "magnifyingglass")
+                    Label("History", systemImage: "clock.arrow.circlepath")
                 }
                 .tag(1)
         }

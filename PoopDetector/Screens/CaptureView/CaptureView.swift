@@ -12,7 +12,7 @@ import SwiftUI
 struct CaptureView: View {
     @Environment(\.modelContext) var modelContext
     @State private var viewModel = ViewModel()
-    
+
     var body: some View {
         NavigationStack(path: $viewModel.navigationPath) {
             VStack {
@@ -60,15 +60,12 @@ struct CaptureView: View {
                     .font(.system(size: 48, weight: .bold))
                     .foregroundColor(.brown)
             }
-            
+
             Image("pandaMain")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 280, height: 280)
-                .background(Color.white.opacity(0.9))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(radius: 10)
-            
+
             Menu(content: {
                 Button(action: {
                     viewModel.showPhotoPickerSheet = true
@@ -93,24 +90,14 @@ struct CaptureView: View {
                 .padding(.horizontal, 32)
                 .padding(.vertical, 16)
                 .background(
-                    LinearGradient(
-                        gradient: Gradient(colors: [Color.orange, Color.orange.opacity(0.8)]),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
+                    LinearGradient.primaryButtonBackground
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 30))
                 .shadow(color: .orange.opacity(0.3), radius: 8, x: 0, y: 4)
             })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.yellow.opacity(0.6)]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        )
+        .background(Color.lightYellowBackground)
     }
 }
 
