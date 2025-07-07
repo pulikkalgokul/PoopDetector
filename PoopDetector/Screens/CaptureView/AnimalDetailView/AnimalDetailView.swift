@@ -17,7 +17,7 @@ struct AnimalDetailView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 0) {
                     stretchyImageHeader(geometry: geometry)
                     
@@ -177,12 +177,9 @@ struct AnimalDetailView: View {
                     .font(.system(size: 16, weight: .heavy, design: .rounded))
             }
             .foregroundColor(.brown)
-            .padding()
-            .background(
-                LinearGradient.primaryButtonBackground
-            )
+            .padding(15)
+            .background(.thinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 25))
-            .shadow(color: .orange.opacity(0.3), radius: 4, x: 0, y: 2)
         }
         .padding(.top, 50)
         .padding(.leading, 20)

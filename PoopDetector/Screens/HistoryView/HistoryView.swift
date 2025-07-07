@@ -17,7 +17,7 @@ struct HistoryView: View {
             if historyEntry.isEmpty {
                 PandaErrorView(title: "No History Yet!", subtitle: "Start investigating")
             } else {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     LazyVStack(spacing: 16) {
                         ForEach(historyEntry) { entry in
                             NavigationLink(destination: ScanResultView(entry: entry.asAnalysisResult)) {
