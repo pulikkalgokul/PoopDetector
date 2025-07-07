@@ -36,7 +36,7 @@ struct CaptureView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: HistoryView()) {
                         Image(systemName: "clock.arrow.circlepath")
-                            .font(.system(size: 25, weight: .heavy, design: .rounded))
+                            .font(.system(size: 15, weight: .heavy, design: .rounded))
                             .foregroundColor(.brown)
                     }
                 }

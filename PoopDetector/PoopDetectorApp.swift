@@ -22,29 +22,39 @@ struct PoopDetectorApp: App {
     }
     
     private func setupNavigationBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
+        // Transparent appearance (default)
+        let transparentAppearance = UINavigationBarAppearance()
+        transparentAppearance.configureWithTransparentBackground()
+        transparentAppearance.backgroundColor = .clear
+        transparentAppearance.backgroundEffect = nil
+        transparentAppearance.shadowColor = .clear
         
-        // Configure back button appearance
-        let backButtonAppearance = UIBarButtonItemAppearance()
+        // Opaque appearance (when scrolling)
+        let opaqueAppearance = UINavigationBarAppearance()
+        opaqueAppearance.configureWithOpaqueBackground()
+        opaqueAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.95)
+        opaqueAppearance.shadowColor = UIColor.black.withAlphaComponent(0.1)
+        
+        // Configure back button appearance for both
         let backButtonTextAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 18, weight: .heavy),
-            .foregroundColor: UIColor.brown
+            .foregroundColor: UIColor.brown.withAlphaComponent(0.8)
         ]
-        backButtonAppearance.normal.titleTextAttributes = backButtonTextAttributes
-        appearance.backButtonAppearance = backButtonAppearance
         
-        // Configure bar button items
         let buttonAppearance = UIBarButtonItemAppearance()
         buttonAppearance.normal.titleTextAttributes = backButtonTextAttributes
-        appearance.buttonAppearance = buttonAppearance
+        
+        // Apply to both appearances
+        transparentAppearance.backButtonAppearance = buttonAppearance
+        opaqueAppearance.backButtonAppearance = buttonAppearance
         
         // Apply to navigation bar
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().standardAppearance = opaqueAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = transparentAppearance
+        UINavigationBar.appearance().compactAppearance = opaqueAppearance
+        UINavigationBar.appearance().compactScrollEdgeAppearance = transparentAppearance
         
         // Set tint color for back arrow
-        UINavigationBar.appearance().tintColor = UIColor(red: 0.4, green: 0.2, blue: 0, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.brown
     }
 }
