@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PandaInvestigatingScreen: View {
-    @StateObject private var viewModel = ViewModel()
+    @State private var viewModel = ViewModel()
 
     var body: some View {
         ZStack {

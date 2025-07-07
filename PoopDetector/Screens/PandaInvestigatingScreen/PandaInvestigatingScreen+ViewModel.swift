@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import Observation
 
 extension PandaInvestigatingScreen {
+    @Observable
     @MainActor
-    class ViewModel: ObservableObject {
-        @Published var currentLine = ""
-        @Published var isAnimating = false
+    class ViewModel {
+        var currentLine = ""
+        var isAnimating = false
         
         private let funnyLines = [
             "Analyzing the evidence...",
@@ -31,7 +33,7 @@ extension PandaInvestigatingScreen {
             "The truth is out there..."
         ]
         
-        private var timer: Timer?
+        private var rotatingTask: Task<Void, Never>?
         private var currentIndex = 0
         
         init() {
@@ -39,17 +41,24 @@ extension PandaInvestigatingScreen {
         }
         
         func startRotatingLines() {
-            timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
-                Task { @MainActor in
-                    self.currentIndex = (self.currentIndex + 1) % self.funnyLines.count
-                    self.currentLine = self.funnyLines[self.currentIndex]
+            rotatingTask?.cancel()
+            rotatingTask = Task {
+                while !Task.isCancelled {
+                    currentIndex = (currentIndex + 1) % funnyLines.count
+                    currentLine = funnyLines[currentIndex]
+                    
+                    do {
+                        try await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+                    } catch {
+                        break
+                    }
                 }
             }
         }
         
         func stopRotatingLines() {
-            timer?.invalidate()
-            timer = nil
+            rotatingTask?.cancel()
+            rotatingTask = nil
         }
         
         func startAnimation() {
