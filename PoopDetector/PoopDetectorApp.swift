@@ -10,15 +10,29 @@ import SwiftUI
 
 @main
 struct PoopDetectorApp: App {
+    @State private var showOnboarding = false
+    
     init() {
         setupNavigationBarAppearance()
+        checkOnboardingStatus()
     }
     
     var body: some Scene {
         WindowGroup {
-            CaptureView()
+            if showOnboarding {
+                OnboardingView {
+                    showOnboarding = false
+                }
+            } else {
+                CaptureView()
+            }
         }
         .modelContainer(for: HistoryEntry.self)
+    }
+    
+    private func checkOnboardingStatus() {
+        let onboardingCompleted = UserDefaults.standard.bool(forKey: "OnboardingCompleted")
+        showOnboarding = !onboardingCompleted
     }
     
     private func setupNavigationBarAppearance() {
