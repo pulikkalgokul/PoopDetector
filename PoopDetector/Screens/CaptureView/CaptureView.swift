@@ -66,40 +66,48 @@ struct CaptureView: View {
 
     var initialView: some View {
         VStack(spacing: 40) {
-            VStack(spacing: 16) {
-                Text("Who Did the")
-                    .font(.system(size: 48, weight: .bold))
-                    .foregroundColor(.brown)
-                Text("DooDoo?")
-                    .font(.system(size: 48, weight: .bold))
-                    .foregroundColor(.brown)
+            titleStack
+            pandaView
+            cameraButton
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.lightYellowBackground)
+    }
+
+    var titleStack: some View {
+        VStack {
+            Text("Who Did the")
+                .font(.system(size: 48, weight: .heavy, design: .rounded))
+                .foregroundColor(.brown)
+            Text("DooDoo?")
+                .font(.system(size: 48, weight: .heavy, design: .rounded))
+                .foregroundColor(.brown)
+        }
+    }
+
+    var pandaView: some View {
+        Image("pandaMain")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 300, height: 300)
+    }
+
+    var cameraButton: some View {
+        Menu(content: {
+            Button(action: {
+                viewModel.showPhotoPickerSheet = true
+            }) {
+                Label("Choose from Library", systemImage: "photo.on.rectangle")
             }
 
-            Image("pandaMain")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 280, height: 280)
-
-            Menu(content: {
-                Button(action: {
-                    viewModel.showPhotoPickerSheet = true
-                }) {
-                    Label("Choose from Library", systemImage: "photo.on.rectangle")
-                }
-
-                Button(action: {
-                    viewModel.showPhotoPickerSheetWithCamera = true
-                }) {
-                    Label("Take Photo", systemImage: "camera")
-                }
-            }, label: {
-                HStack {
-                    Image(systemName: "camera.fill")
-                        .font(.title2)
-                    Text("Detect the Scat!")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                }
+            Button(action: {
+                viewModel.showPhotoPickerSheetWithCamera = true
+            }) {
+                Label("Take Photo", systemImage: "camera")
+            }
+        }, label: {
+            Image(systemName: "camera.fill")
+                .font(.system(size: 30, weight: .heavy, design: .rounded))
                 .foregroundColor(.white)
                 .padding(.horizontal, 32)
                 .padding(.vertical, 16)
@@ -108,10 +116,7 @@ struct CaptureView: View {
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 30))
                 .shadow(color: .orange.opacity(0.3), radius: 8, x: 0, y: 4)
-            })
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.lightYellowBackground)
+        })
     }
 }
 
