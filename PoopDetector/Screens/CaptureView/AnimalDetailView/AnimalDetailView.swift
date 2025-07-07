@@ -10,6 +10,7 @@ import SwiftUI
 struct AnimalDetailView: View {
     let animal: WikiAPIResponseDTO
     @State private var scrollOffset: CGFloat = 0
+    @Environment(\.dismiss) private var dismiss
     
     private let imageHeight: CGFloat = 300
     private let minImageHeight: CGFloat = 120
@@ -30,9 +31,12 @@ struct AnimalDetailView: View {
                 }
             }
             .coordinateSpace(name: "scroll")
+            .overlay(alignment: .topLeading) {
+                customBackButton
+            }
             .ignoresSafeArea(.container, edges: .top)
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .background(Color.lightYellowBackground)
     }
     
@@ -161,6 +165,27 @@ struct AnimalDetailView: View {
                 .foregroundColor(.brown.opacity(0.7))
                 .multilineTextAlignment(.trailing)
         }
+    }
+    
+    @ViewBuilder
+    private var customBackButton: some View {
+        Button(action: {
+            dismiss()
+        }) {
+            HStack(spacing: 8) {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 16, weight: .heavy, design: .rounded))
+            }
+            .foregroundColor(.brown)
+            .padding()
+            .background(
+                LinearGradient.primaryButtonBackground
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 25))
+            .shadow(color: .orange.opacity(0.3), radius: 4, x: 0, y: 2)
+        }
+        .padding(.top, 50)
+        .padding(.leading, 20)
     }
 }
 
