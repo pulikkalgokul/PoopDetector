@@ -5,7 +5,8 @@
       "Bash(find:*)",
       "mcp__XcodeBuildMCP__discover_projs",
       "mcp__XcodeBuildMCP__list_schems_proj",
-      "mcp__XcodeBuildMCP__build_sim_name_proj"
+      "mcp__XcodeBuildMCP__build_sim_name_proj",
+      "Bash(grep:*)"
     ],
     "deny": []
   }

@@ -15,27 +15,26 @@ struct HistoryView: View {
     var body: some View {
         Group {
             if historyEntry.isEmpty {
-                VStack(spacing: 20) {
-                    Image(systemName: "magnifyingglass")
-                        .font(.system(size: 60))
-                        .foregroundColor(.brown.opacity(0.6))
+                VStack(spacing: 30) {
+                    Image("confusedPanda")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 300, height: 300)
 
-                    Text("No Scans Yet")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.brown)
-
-                    Text("Your scat analysis history will appear here")
-                        .font(.body)
-                        .foregroundColor(.brown.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
+                    VStack(spacing: 12) {
+                        Text("No History Yet!")
+                            .font(.system(size: 28, weight: .heavy, design: .rounded))
+                            .foregroundColor(.brown)
+                        
+                        Text("Start investigating")
+                            .font(.system(size: 16, weight: .heavy, design: .rounded))
+                            .foregroundColor(.brown.opacity(0.7))
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
-                .background(Color.white.opacity(0.8))
-                .cornerRadius(20)
-                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-                .padding(.horizontal)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 16) {
@@ -51,8 +50,7 @@ struct HistoryView: View {
             }
         }
         .background(Color.lightYellowBackground)
-        .navigationTitle("Scat History")
-        .navigationBarTitleDisplayMode(.inline)
+        .customNavigationTitle("Scat History")
     }
 }
 

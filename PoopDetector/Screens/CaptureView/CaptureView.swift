@@ -61,7 +61,7 @@ struct CaptureView: View {
                 viewModel.viewState = .initial
             }
         }
-        .tint(.black)
+        .tint(.brown)
     }
 
     var initialView: some View {
@@ -71,6 +71,7 @@ struct CaptureView: View {
             cameraButton
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .offset(y: -50)
         .background(Color.lightYellowBackground)
     }
 
