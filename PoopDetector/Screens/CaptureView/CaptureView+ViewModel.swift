@@ -53,7 +53,6 @@ extension CaptureView {
                 )
                 let analysisResult = AnalysisResult(analyzedResult: analyzedResultDTO, matchingAnimals: matchingAnimals)
                 navigationPath.append(analysisResult)
-                viewState = .initial
             } catch {
                 viewState = .failed(error)
             }

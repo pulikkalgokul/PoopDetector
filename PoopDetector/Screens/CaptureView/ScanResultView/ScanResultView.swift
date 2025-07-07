@@ -61,6 +61,9 @@ struct ScanResultView: View {
             )
         )
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: WikiAPIResponseDTO.self) { animal in
+            AnimalDetailView(animal: animal)
+        }
     }
 }
 

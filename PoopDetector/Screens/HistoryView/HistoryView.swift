@@ -15,26 +15,7 @@ struct HistoryView: View {
     var body: some View {
         Group {
             if historyEntry.isEmpty {
-                VStack(spacing: 30) {
-                    Image("confusedPanda")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 300, height: 300)
-
-                    VStack(spacing: 12) {
-                        Text("No History Yet!")
-                            .font(.system(size: 28, weight: .heavy, design: .rounded))
-                            .foregroundColor(.brown)
-                        
-                        Text("Start investigating")
-                            .font(.system(size: 16, weight: .heavy, design: .rounded))
-                            .foregroundColor(.brown.opacity(0.7))
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding()
+                PandaErrorView(title: "No History Yet!", subtitle: "Start investigating")
             } else {
                 ScrollView {
                     LazyVStack(spacing: 16) {

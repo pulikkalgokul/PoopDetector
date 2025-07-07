@@ -20,27 +20,16 @@ struct CaptureView: View {
                 case .initial:
                     initialView
                 case .analyzing:
-                    ProgressView("Analyzing...")
+                    PandaInvestigatingScreen()
                 case let .failed(error):
-                    Text(error.localizedDescription)
+                    PandaErrorView(title: "Oh no!", subtitle: error.localizedDescription)
                 }
             }
+            .background(Color.lightYellowBackground)
             .navigationDestination(for: AnalysisResult.self) { analysis in
                 ScanResultView(entry: analysis)
             }
-            .navigationDestination(for: WikiAPIResponseDTO.self) { animal in
-                AnimalDetailView(animal: animal)
-            }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: HistoryView()) {
-                        Image(systemName: "clock.arrow.circlepath")
-                            .font(.system(size: 15, weight: .heavy, design: .rounded))
-                            .foregroundColor(.brown)
-                    }
-                }
-            }
         }
         .sheet(isPresented: $viewModel.showPhotoPickerSheet) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.selectedImage)
@@ -71,8 +60,15 @@ struct CaptureView: View {
             cameraButton
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .offset(y: -50)
-        .background(Color.lightYellowBackground)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: HistoryView()) {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .font(.system(size: 20, weight: .heavy, design: .rounded))
+                        .foregroundColor(.brown)
+                }
+            }
+        }
     }
 
     var titleStack: some View {
