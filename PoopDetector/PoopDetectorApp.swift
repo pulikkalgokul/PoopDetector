@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct PoopDetectorApp: App {
     @AppStorage("OnboardingCompleted") private var onboardingCompleted: Bool = false
+    @State private var showSplash = true
     
     init() {
         setupNavigationBarAppearance()
@@ -18,13 +19,25 @@ struct PoopDetectorApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if !onboardingCompleted {
-                OnboardingView {
-                    onboardingCompleted = true
+            Group {
+                if showSplash {
+                    SplashView()
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                showSplash = false
+                            }
+                        }
+                } else if !onboardingCompleted {
+                    OnboardingView {
+                        onboardingCompleted = true
+                    }
+                    .transition(.slideAway)
+                } else {
+                    CaptureView()
+                        .transition(.slideAway)
                 }
-            } else {
-                CaptureView()
             }
+            .animation(.easeIn, value: showSplash)
         }
         .modelContainer(for: HistoryEntry.self)
     }
