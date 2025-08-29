@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import FlagsmithClient
 
 @main
 struct PoopDetectorApp: App {
@@ -15,6 +16,7 @@ struct PoopDetectorApp: App {
     
     init() {
         setupNavigationBarAppearance()
+        setupFlagsmithClient()
     }
     
     var body: some Scene {
@@ -40,6 +42,10 @@ struct PoopDetectorApp: App {
             .animation(.easeIn, value: showSplash)
         }
         .modelContainer(for: HistoryEntry.self)
+    }
+    
+    private func setupFlagsmithClient() {
+        Flagsmith.shared.apiKey = "3EbDtQTSAUsTdRGHoRXCep"
     }
     
     private func setupNavigationBarAppearance() {
