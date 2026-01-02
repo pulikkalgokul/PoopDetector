@@ -450,7 +450,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PoopDetector/Preview Content\"";
-				DEVELOPMENT_TEAM = RF53U2K23A;
+				DEVELOPMENT_TEAM = 473BWG9258;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to capture poop images";
@@ -481,7 +481,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PoopDetector/Preview Content\"";
-				DEVELOPMENT_TEAM = RF53U2K23A;
+				DEVELOPMENT_TEAM = 473BWG9258;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to capture poop images";

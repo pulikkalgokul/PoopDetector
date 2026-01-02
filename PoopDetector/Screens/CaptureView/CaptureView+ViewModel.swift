@@ -21,6 +21,7 @@ extension CaptureView {
     class ViewModel {
         private let llmService: any LLMServiceProtocol
         private let wikiService: any WikiServiceProtocol
+        private let featureFlagUseCase: any FeatureFlagUseCaseProtocol
         var selectedImage = UIImage()
 
         var viewState: ViewState = .initial
@@ -31,13 +32,20 @@ extension CaptureView {
 
         init(
             llmService: any LLMServiceProtocol = MockLLMService(),
-            wikiService: any WikiServiceProtocol = DefaultWikiService()
+            wikiService: any WikiServiceProtocol = DefaultWikiService(),
+            featureFlagUseCase: any FeatureFlagUseCaseProtocol = DefaultFeatureFlagUseCase()
         ) {
             self.llmService = llmService
             self.wikiService = wikiService
+            self.featureFlagUseCase = featureFlagUseCase
         }
 
         func analyze() async {
+            let llmServiceEnabled = await featureFlagUseCase.isEnabled(flagID: "llm_service_enabled")
+            guard llmServiceEnabled else {
+                fatalError("Unexpected error: Feature flag 'enable_analysis' not found")
+            }
+
             viewState = .analyzing
             do {
                 let analyzedResultDTO = try await llmService.analyzeImage(selectedImage)

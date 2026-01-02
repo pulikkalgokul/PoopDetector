@@ -5,9 +5,9 @@
 //  Created by Gokul P on 3/11/25.
 //
 
+import FlagsmithClient
 import SwiftData
 import SwiftUI
-import FlagsmithClient
 
 @main
 struct PoopDetectorApp: App {
