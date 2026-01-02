@@ -43,15 +43,19 @@ extension CaptureView {
         func analyze() async {
             let llmServiceEnabled = await featureFlagUseCase.isEnabled(flagID: "llm_service_enabled")
             guard llmServiceEnabled else {
-                viewState = .failed(NSError(
-                    domain: "PoopDetector",
-                    code: 1001,
-                    userInfo: [NSLocalizedDescriptionKey: "This feature is not available now. Please contact support."]
-                ))
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    viewState = .failed(NSError(
+                        domain: "PoopDetector",
+                        code: 1001,
+                        userInfo: [NSLocalizedDescriptionKey: "This feature is not available now. Please contact support."]
+                    ))
+                }
                 return
             }
 
-            viewState = .analyzing
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                viewState = .analyzing
+            }
             do {
                 let analyzedResultDTO = try await llmService.analyzeImage(selectedImage)
                 let matchingAnimals = await getWikiStream(
@@ -67,7 +71,9 @@ extension CaptureView {
                 let analysisResult = AnalysisResult(analyzedResult: analyzedResultDTO, matchingAnimals: matchingAnimals)
                 navigationPath.append(analysisResult)
             } catch {
-                viewState = .failed(error)
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    viewState = .failed(error)
+                }
             }
         }
 
@@ -118,8 +124,21 @@ extension CaptureView {
     }
 }
 
-enum ViewState {
+enum ViewState: Equatable {
     case initial
     case analyzing
     case failed(Error)
+
+    static func == (lhs: ViewState, rhs: ViewState) -> Bool {
+        switch (lhs, rhs) {
+        case (.initial, .initial):
+            return true
+        case (.analyzing, .analyzing):
+            return true
+        case (.failed, .failed):
+            return true
+        default:
+            return false
+        }
+    }
 }

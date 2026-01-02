@@ -19,18 +19,31 @@ struct CaptureView: View {
                 switch viewModel.viewState {
                 case .initial:
                     initialView
+                        .transition(.asymmetric(
+                            insertion: .scale.combined(with: .opacity),
+                            removal: .opacity
+                        ))
                 case .analyzing:
                     PandaInvestigatingScreen()
+                        .transition(.opacity)
                 case let .failed(error):
                     PandaErrorView(
                         title: "Oh no!",
                         subtitle: error.localizedDescription,
                         onRetry: {
-                            viewModel.viewState = .initial
+                            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                viewModel.viewState = .initial
+                            }
                         }
+                    )
+                    .transition(.asymmetric(
+                        insertion: .scale.combined(with: .opacity),
+                        removal: .scale.combined(with: .opacity)
+                    )
                     )
                 }
             }
+            .animation(.spring(response: 0.6, dampingFraction: 0.8), value: viewModel.viewState)
             .background(Color.lightYellowBackground)
             .navigationDestination(for: AnalysisResult.self) { analysis in
                 ScanResultView(entry: analysis)
@@ -53,7 +66,9 @@ struct CaptureView: View {
         }
         .onChange(of: viewModel.navigationPath) { _, newPath in
             if newPath.isEmpty {
-                viewModel.viewState = .initial
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    viewModel.viewState = .initial
+                }
             }
         }
         .tint(.brown)
@@ -123,6 +138,22 @@ struct CaptureView: View {
     }
 }
 
-#Preview {
+#Preview("Initial State") {
     CaptureView()
+}
+
+#Preview("Error State") {
+    @Previewable @State var viewModel = CaptureView.ViewModel()
+    NavigationStack {
+        VStack {
+            PandaErrorView(
+                title: "Oh no!",
+                subtitle: "This feature is not available now. Please contact support.",
+                onRetry: {
+                    viewModel.viewState = .initial
+                }
+            )
+        }
+        .background(Color.lightYellowBackground)
+    }
 }

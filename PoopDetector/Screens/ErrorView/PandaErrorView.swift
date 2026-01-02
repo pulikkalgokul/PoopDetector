@@ -13,12 +13,7 @@ struct PandaErrorView: View {
     var onRetry: (() -> Void)? = nil
 
     var body: some View {
-        VStack(spacing: 30) {
-            Image("confusedPanda")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 300)
-
+        VStack(spacing: 40) {
             VStack(spacing: 12) {
                 Text(title)
                     .font(.system(size: 28, weight: .heavy, design: .rounded))
@@ -31,10 +26,15 @@ struct PandaErrorView: View {
                     .padding(.horizontal)
             }
 
+            Image("confusedPanda")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 300, height: 300)
+
             if let onRetry {
                 Button(action: onRetry) {
-                    Text("Retry")
-                        .font(.system(size: 18, weight: .heavy, design: .rounded))
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 30, weight: .heavy, design: .rounded))
                         .foregroundColor(.white)
                         .padding(.horizontal, 32)
                         .padding(.vertical, 16)
@@ -50,6 +50,15 @@ struct PandaErrorView: View {
     }
 }
 
-#Preview {
+#Preview("Without Retry") {
     PandaErrorView(title: "No History Yet!", subtitle: "Start investigating")
+}
+
+#Preview("With Retry") {
+    PandaErrorView(
+        title: "Oh no!",
+        subtitle: "This feature is not available now. Please contact support.",
+        onRetry: {}
+    )
+    .background(Color.lightYellowBackground)
 }
