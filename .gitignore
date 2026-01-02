@@ -7,3 +7,6 @@ xcuserdata/
 
 # SwiftPM user-specific files
 **/.swiftpm/xcode/xcuserdata/
+
+# Claude Code local settings
+.claude/settings.local.json
