@@ -43,7 +43,12 @@ extension CaptureView {
         func analyze() async {
             let llmServiceEnabled = await featureFlagUseCase.isEnabled(flagID: "llm_service_enabled")
             guard llmServiceEnabled else {
-                fatalError("Unexpected error: Feature flag 'enable_analysis' not found")
+                viewState = .failed(NSError(
+                    domain: "PoopDetector",
+                    code: 1001,
+                    userInfo: [NSLocalizedDescriptionKey: "This feature is not available now. Please contact support."]
+                ))
+                return
             }
 
             viewState = .analyzing

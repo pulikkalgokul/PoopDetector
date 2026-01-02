@@ -22,7 +22,13 @@ struct CaptureView: View {
                 case .analyzing:
                     PandaInvestigatingScreen()
                 case let .failed(error):
-                    PandaErrorView(title: "Oh no!", subtitle: error.localizedDescription)
+                    PandaErrorView(
+                        title: "Oh no!",
+                        subtitle: error.localizedDescription,
+                        onRetry: {
+                            viewModel.viewState = .initial
+                        }
+                    )
                 }
             }
             .background(Color.lightYellowBackground)
