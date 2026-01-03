@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Mocking
 
+@Mocked(compilationCondition: .debug)
 protocol WikiServiceProtocol: Sendable {
     func wikiData(for scientificName: String) async throws -> WikiAPIResponseDTO
 }

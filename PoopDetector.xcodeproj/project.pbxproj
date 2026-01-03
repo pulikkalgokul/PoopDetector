@@ -10,6 +10,8 @@
 		4B3344B32D848D73005B0F77 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 4B3344B22D848D73005B0F77 /* GoogleGenerativeAI */; };
 		4B3344BA2D849581005B0F77 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4B3344B82D84957E005B0F77 /* .gitignore */; };
 		4B7AFFBC2DB54CEB00DDCA3C /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */; };
+		C00D92D42E3B0DED00070D4A /* FlagsmithClient in Frameworks */ = {isa = PBXBuildFile; productRef = C00D92D32E3B0DED00070D4A /* FlagsmithClient */; };
+		C02EED142F084ED600E67313 /* Mocking in Frameworks */ = {isa = PBXBuildFile; productRef = C02EED132F084ED600E67313 /* Mocking */; };
 		C0AA0B6D2E199B7200B16FE2 /* GenerativeAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0AA0B6C2E199B7200B16FE2 /* GenerativeAI-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -79,8 +81,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C00D92D42E3B0DED00070D4A /* FlagsmithClient in Frameworks */,
 				4B3344B32D848D73005B0F77 /* GoogleGenerativeAI in Frameworks */,
 				4B7AFFBC2DB54CEB00DDCA3C /* NetworkLayer in Frameworks */,
+				C02EED142F084ED600E67313 /* Mocking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +159,8 @@
 			packageProductDependencies = (
 				4B3344B22D848D73005B0F77 /* GoogleGenerativeAI */,
 				4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */,
+				C00D92D32E3B0DED00070D4A /* FlagsmithClient */,
+				C02EED132F084ED600E67313 /* Mocking */,
 			);
 			productName = PoopDetector;
 			productReference = 4B8B99862D812EA90092C363 /* PoopDetector.app */;
@@ -240,6 +246,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				4B3344B12D848D73005B0F77 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+				C02207382E3B0D4E00A85E34 /* XCRemoteSwiftPackageReference "flagsmith-ios-client" */,
+				C02EED122F084AAE00E67313 /* XCRemoteSwiftPackageReference "swift-mocking" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4B8B99872D812EA90092C363 /* Products */;
@@ -377,6 +385,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -432,6 +441,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -444,7 +454,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PoopDetector/Preview Content\"";
-				DEVELOPMENT_TEAM = RF53U2K23A;
+				DEVELOPMENT_TEAM = 473BWG9258;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to capture poop images";
@@ -453,6 +463,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -474,7 +485,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PoopDetector/Preview Content\"";
-				DEVELOPMENT_TEAM = RF53U2K23A;
+				DEVELOPMENT_TEAM = 473BWG9258;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to capture poop images";
@@ -483,6 +494,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -618,6 +630,22 @@
 				minimumVersion = 0.5.6;
 			};
 		};
+		C02207382E3B0D4E00A85E34 /* XCRemoteSwiftPackageReference "flagsmith-ios-client" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Flagsmith/flagsmith-ios-client.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.8.1;
+			};
+		};
+		C02EED122F084AAE00E67313 /* XCRemoteSwiftPackageReference "swift-mocking" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fetch-rewards/swift-mocking.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -629,6 +657,16 @@
 		4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NetworkLayer;
+		};
+		C00D92D32E3B0DED00070D4A /* FlagsmithClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C02207382E3B0D4E00A85E34 /* XCRemoteSwiftPackageReference "flagsmith-ios-client" */;
+			productName = FlagsmithClient;
+		};
+		C02EED132F084ED600E67313 /* Mocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C02EED122F084AAE00E67313 /* XCRemoteSwiftPackageReference "swift-mocking" */;
+			productName = Mocking;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

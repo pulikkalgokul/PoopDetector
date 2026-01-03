@@ -13,29 +13,25 @@ struct HistoryView: View {
     @Query(sort: \HistoryEntry.timestamp, order: .reverse) private var historyEntry: [HistoryEntry]
 
     var body: some View {
-        NavigationView {
+        Group {
             if historyEntry.isEmpty {
-                ContentUnavailableView(
-                    "No Scans Yet",
-                    systemImage: "magnifyingglass",
-                    description: Text("Your scat analysis history will appear here")
-                )
+                PandaErrorView(title: "No History Yet!", subtitle: "Start investigating")
             } else {
-                List(historyEntry) { entry in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(entry.analyzedResult.scatDescription)
-                            .font(.headline)
-                        ForEach(entry.analyzedResult.matchingAnimals) { animal in
-                            Text("• \(animal.animalName) (\(animal.scientificName))")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(spacing: 16) {
+                        ForEach(historyEntry) { entry in
+                            NavigationLink(destination: ScanResultView(entry: entry.asAnalysisResult)) {
+                                HistoryCard(entry: entry)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
-                    .padding(.vertical, 8)
+                    .padding()
                 }
-                .navigationTitle("Scat History")
             }
         }
+        .background(Color.lightYellowBackground)
+        .customNavigationTitle("Scat History")
     }
 }
 

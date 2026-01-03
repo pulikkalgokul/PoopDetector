@@ -12,35 +12,43 @@ import SwiftUI
 struct CaptureView: View {
     @Environment(\.modelContext) var modelContext
     @State private var viewModel = ViewModel()
+
     var body: some View {
-        VStack {
-            switch viewModel.viewState {
-            case .initial:
-                initialView
-            case .analyzing:
-                ProgressView("Analyzing...")
-            case let .result(analysis):
-                ZStack {
-                    ScrollView {
-                        ScanResultView(entry: analysis)
-                    }
-                    VStack {
-                        Spacer()
-                        Button(action: {
-                            viewModel.viewState = .initial
-                        }, label: {
-                            Label("Scan Again", systemImage: "repeat")
-                                .bold()
-                                .padding()
-                                .foregroundStyle(.white)
-                                .background(.indigo)
-                                .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        })
-                    }
+        NavigationStack(path: $viewModel.navigationPath) {
+            VStack {
+                switch viewModel.viewState {
+                case .initial:
+                    initialView
+                        .transition(.asymmetric(
+                            insertion: .scale.combined(with: .opacity),
+                            removal: .opacity
+                        ))
+                case .analyzing:
+                    PandaInvestigatingScreen()
+                        .transition(.opacity)
+                case let .failed(error):
+                    PandaErrorView(
+                        title: "Oh no!",
+                        subtitle: error.localizedDescription,
+                        onRetry: {
+                            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                viewModel.viewState = .initial
+                            }
+                        }
+                    )
+                    .transition(.asymmetric(
+                        insertion: .scale.combined(with: .opacity),
+                        removal: .scale.combined(with: .opacity)
+                    )
+                    )
                 }
-            case let .failed(error):
-                Text(error.localizedDescription)
             }
+            .animation(.spring(response: 0.6, dampingFraction: 0.8), value: viewModel.viewState)
+            .background(Color.lightYellowBackground)
+            .navigationDestination(for: AnalysisResult.self) { analysis in
+                ScanResultView(entry: analysis)
+            }
+            .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $viewModel.showPhotoPickerSheet) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.selectedImage)
@@ -56,40 +64,96 @@ struct CaptureView: View {
                 await viewModel.analyze()
             }
         }
+        .onChange(of: viewModel.navigationPath) { _, newPath in
+            if newPath.isEmpty {
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    viewModel.viewState = .initial
+                }
+            }
+        }
+        .tint(.brown)
     }
 
     var initialView: some View {
-        VStack {
-            Image("poopImage")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 200)
-            Text("Let's Scan Some Shit")
-                .font(.title)
-            Menu(content: {
-                Button(action: {
-                    viewModel.showPhotoPickerSheet = true
-                }) {
-                    Label("Choose from Library", systemImage: "photo.on.rectangle")
-                }
-
-                Button(action: {
-                    viewModel.showPhotoPickerSheetWithCamera = true
-                }) {
-                    Label("Take Photo", systemImage: "camera")
-                }
-            }, label: {
-                Label("Click", systemImage: "photo")
-                    .bold()
-                    .padding()
-                    .foregroundStyle(.white)
-                    .background(.indigo)
-                    .clipShape(RoundedRectangle(cornerRadius: 20.0))
-            })
+        VStack(spacing: 40) {
+            titleStack
+            pandaView
+            cameraButton
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: HistoryView()) {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .font(.system(size: 20, weight: .heavy, design: .rounded))
+                        .foregroundColor(.brown)
+                }
+            }
+        }
+    }
+
+    var titleStack: some View {
+        VStack {
+            Text("Who Did the")
+                .font(.system(size: 48, weight: .heavy, design: .rounded))
+                .foregroundColor(.brown)
+            Text("DooDoo?")
+                .font(.system(size: 48, weight: .heavy, design: .rounded))
+                .foregroundColor(.brown)
+        }
+    }
+
+    var pandaView: some View {
+        Image("pandaMain")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 300, height: 300)
+    }
+
+    var cameraButton: some View {
+        Menu(content: {
+            Button(action: {
+                viewModel.showPhotoPickerSheet = true
+            }) {
+                Label("Choose from Library", systemImage: "photo.on.rectangle")
+            }
+
+            Button(action: {
+                viewModel.showPhotoPickerSheetWithCamera = true
+            }) {
+                Label("Take Photo", systemImage: "camera")
+            }
+        }, label: {
+            Image(systemName: "camera.fill")
+                .font(.system(size: 30, weight: .heavy, design: .rounded))
+                .foregroundColor(.white)
+                .padding(.horizontal, 32)
+                .padding(.vertical, 16)
+                .background(
+                    LinearGradient.primaryButtonBackground
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+                .shadow(color: .orange.opacity(0.3), radius: 8, x: 0, y: 4)
+        })
     }
 }
 
-#Preview {
+#Preview("Initial State") {
     CaptureView()
+}
+
+#Preview("Error State") {
+    @Previewable @State var viewModel = CaptureView.ViewModel()
+    NavigationStack {
+        VStack {
+            PandaErrorView(
+                title: "Oh no!",
+                subtitle: "This feature is not available now. Please contact support.",
+                onRetry: {
+                    viewModel.viewState = .initial
+                }
+            )
+        }
+        .background(Color.lightYellowBackground)
+    }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScatAnalysisLLMResponse: Decodable {
+struct ScatAnalysisLLMResponse: Decodable, Hashable {
     var scatDescription: String
     var matchingAnimals: [MatchingAnimalsLLMResponse]
 }

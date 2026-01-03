@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AnalysisResult {
+struct AnalysisResult: Hashable {
     var id: UUID
     var timestamp: Date
     var imageData: Data?

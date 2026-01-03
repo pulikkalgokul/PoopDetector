@@ -21,23 +21,41 @@ extension CaptureView {
     class ViewModel {
         private let llmService: any LLMServiceProtocol
         private let wikiService: any WikiServiceProtocol
+        private let featureFlagUseCase: any FeatureFlagUseCaseProtocol
         var selectedImage = UIImage()
 
         var viewState: ViewState = .initial
+        var navigationPath = NavigationPath()
         var showPhotoPickerSheetWithCamera = false
         var showPhotoPickerSheet = false
         var modelContext: ModelContext?
 
         init(
             llmService: any LLMServiceProtocol = MockLLMService(),
-            wikiService: any WikiServiceProtocol = DefaultWikiService()
+            wikiService: any WikiServiceProtocol = DefaultWikiService(),
+            featureFlagUseCase: any FeatureFlagUseCaseProtocol = DefaultFeatureFlagUseCase()
         ) {
             self.llmService = llmService
             self.wikiService = wikiService
+            self.featureFlagUseCase = featureFlagUseCase
         }
 
         func analyze() async {
-            viewState = .analyzing
+            let llmServiceEnabled = await featureFlagUseCase.isEnabled(flagID: "llm_service_enabled")
+            guard llmServiceEnabled else {
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    viewState = .failed(NSError(
+                        domain: "PoopDetector",
+                        code: 1001,
+                        userInfo: [NSLocalizedDescriptionKey: "This feature is not available now. Please contact support."]
+                    ))
+                }
+                return
+            }
+
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                viewState = .analyzing
+            }
             do {
                 let analyzedResultDTO = try await llmService.analyzeImage(selectedImage)
                 let matchingAnimals = await getWikiStream(
@@ -50,9 +68,12 @@ extension CaptureView {
                         matchingAnimals: matchingAnimals
                     )
                 )
-                viewState = .result(AnalysisResult(analyzedResult: analyzedResultDTO, matchingAnimals: matchingAnimals))
+                let analysisResult = AnalysisResult(analyzedResult: analyzedResultDTO, matchingAnimals: matchingAnimals)
+                navigationPath.append(analysisResult)
             } catch {
-                print(error.localizedDescription)
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    viewState = .failed(error)
+                }
             }
         }
 
@@ -103,9 +124,21 @@ extension CaptureView {
     }
 }
 
-enum ViewState {
+enum ViewState: Equatable {
     case initial
     case analyzing
-    case result(AnalysisResult)
     case failed(Error)
+
+    static func == (lhs: ViewState, rhs: ViewState) -> Bool {
+        switch (lhs, rhs) {
+        case (.initial, .initial):
+            return true
+        case (.analyzing, .analyzing):
+            return true
+        case (.failed, .failed):
+            return true
+        default:
+            return false
+        }
+    }
 }

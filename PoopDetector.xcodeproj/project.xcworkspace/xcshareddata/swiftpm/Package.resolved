@@ -1,6 +1,15 @@
 {
-  "originHash" : "49c0a7c66ddd8acc10de21654f915b12fabf756560e6db9452ff2a2da401377f",
+  "originHash" : "68a2f7a01aef64cd4a4e57b9b0364c8287d86af13ab6e504ee2c4886ad8d30f1",
   "pins" : [
+    {
+      "identity" : "flagsmith-ios-client",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Flagsmith/flagsmith-ios-client.git",
+      "state" : {
+        "revision" : "786d4aedb4075ad8e33c0b27808471c541fd7750",
+        "version" : "3.9.0"
+      }
+    },
     {
       "identity" : "generative-ai-swift",
       "kind" : "remoteSourceControl",
@@ -8,6 +17,42 @@
       "state" : {
         "revision" : "44b8ce120425f9cf53ca756f3434ca2c2696f8bd",
         "version" : "0.5.6"
+      }
+    },
+    {
+      "identity" : "swift-locking",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fetch-rewards/swift-locking.git",
+      "state" : {
+        "revision" : "2e3a5fbf738cdaab9c21cea01a12b6c7b05afbc9",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "swift-mocking",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fetch-rewards/swift-mocking.git",
+      "state" : {
+        "revision" : "dcab218e90c9a92308c61713315d1b29d753e30c",
+        "version" : "0.2.2"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax.git",
+      "state" : {
+        "revision" : "cb53fa1bd3219b0b23ded7dfdd3b2baff266fd25",
+        "version" : "600.0.0"
+      }
+    },
+    {
+      "identity" : "swiftsyntaxsugar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fetch-rewards/SwiftSyntaxSugar.git",
+      "state" : {
+        "revision" : "0ba74009501ef51b21b4b6e7999507a40f6e54b9",
+        "version" : "0.1.1"
       }
     }
   ],
