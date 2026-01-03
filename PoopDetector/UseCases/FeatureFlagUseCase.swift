@@ -7,9 +7,11 @@
 
 import Foundation
 import FlagsmithClient
+import Mocking
 
 // MARK: - Protocol
 
+@Mocked(compilationCondition: .debug)
 protocol FeatureFlagUseCaseProtocol: Sendable {
     func isEnabled(flagID: String) async -> Bool
 }
@@ -36,21 +38,3 @@ struct DefaultFeatureFlagUseCase: FeatureFlagUseCaseProtocol {
     }
 }
 
-// MARK: - Mock Implementation
-
-struct MockFeatureFlagUseCase: FeatureFlagUseCaseProtocol {
-
-    var mockFlags: [String: Bool]
-
-    init(mockFlags: [String: Bool] = [:]) {
-        self.mockFlags = mockFlags
-    }
-    
-    func isEnabled(flagID: String) async -> Bool {
-        return (try? await getFeatureFlag(flagID: flagID)) ?? false
-    }
-
-    private func getFeatureFlag(flagID: String) async throws -> Bool {
-        return mockFlags[flagID] ?? false
-    }
-}
