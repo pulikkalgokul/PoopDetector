@@ -1,0 +1,6 @@
+{
+  "name": "PoopDetector Development",
+  "description": "Development tools for the PoopDetector iOS app, including Swift testing and mocking capabilities",
+  "version": "1.0.0",
+  "author": "PoopDetector Team"
+}
