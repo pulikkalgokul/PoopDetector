@@ -12,6 +12,8 @@
 		4B7AFFBC2DB54CEB00DDCA3C /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */; };
 		C00D92D42E3B0DED00070D4A /* FlagsmithClient in Frameworks */ = {isa = PBXBuildFile; productRef = C00D92D32E3B0DED00070D4A /* FlagsmithClient */; };
 		C02EED142F084ED600E67313 /* Mocking in Frameworks */ = {isa = PBXBuildFile; productRef = C02EED132F084ED600E67313 /* Mocking */; };
+		C02EEEAD2F09F88100E67313 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = C02EEEAC2F09F88100E67313 /* RevenueCat */; };
+		C02EEEAF2F09F88100E67313 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = C02EEEAE2F09F88100E67313 /* RevenueCatUI */; };
 		C0AA0B6D2E199B7200B16FE2 /* GenerativeAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0AA0B6C2E199B7200B16FE2 /* GenerativeAI-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +85,8 @@
 			files = (
 				C00D92D42E3B0DED00070D4A /* FlagsmithClient in Frameworks */,
 				4B3344B32D848D73005B0F77 /* GoogleGenerativeAI in Frameworks */,
+				C02EEEAF2F09F88100E67313 /* RevenueCatUI in Frameworks */,
+				C02EEEAD2F09F88100E67313 /* RevenueCat in Frameworks */,
 				4B7AFFBC2DB54CEB00DDCA3C /* NetworkLayer in Frameworks */,
 				C02EED142F084ED600E67313 /* Mocking in Frameworks */,
 			);
@@ -161,6 +165,8 @@
 				4B7AFFBB2DB54CEB00DDCA3C /* NetworkLayer */,
 				C00D92D32E3B0DED00070D4A /* FlagsmithClient */,
 				C02EED132F084ED600E67313 /* Mocking */,
+				C02EEEAC2F09F88100E67313 /* RevenueCat */,
+				C02EEEAE2F09F88100E67313 /* RevenueCatUI */,
 			);
 			productName = PoopDetector;
 			productReference = 4B8B99862D812EA90092C363 /* PoopDetector.app */;
@@ -248,6 +254,7 @@
 				4B3344B12D848D73005B0F77 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 				C02207382E3B0D4E00A85E34 /* XCRemoteSwiftPackageReference "flagsmith-ios-client" */,
 				C02EED122F084AAE00E67313 /* XCRemoteSwiftPackageReference "swift-mocking" */,
+				C02EEEAB2F09F88100E67313 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4B8B99872D812EA90092C363 /* Products */;
@@ -646,6 +653,14 @@
 				minimumVersion = 0.2.2;
 			};
 		};
+		C02EEEAB2F09F88100E67313 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.52.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -667,6 +682,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C02EED122F084AAE00E67313 /* XCRemoteSwiftPackageReference "swift-mocking" */;
 			productName = Mocking;
+		};
+		C02EEEAC2F09F88100E67313 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C02EEEAB2F09F88100E67313 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		C02EEEAE2F09F88100E67313 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C02EEEAB2F09F88100E67313 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

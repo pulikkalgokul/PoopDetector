@@ -3,7 +3,7 @@
 ```swift
 @Mocked(compilationCondition: .debug)
 protocol WeatherService {
-    func currentTemperature(latitude Double, longitude: Double) async throws -> Double
+    func currentTemperature(latitude: Double, longitude: Double) async throws -> Double
 }
 ```
 

@@ -1,29 +1,60 @@
 ---
 name: swift-mocking
-description: Use when the user needs to mock protocol dependencies for testing, create testable Swift code with dependency injection, or write unit tests that verify method calls and arguments.
+description: This skill should be used when the user asks to "create a mock", "generate a mock", "use @Mocked macro", "mock a protocol", "write test mocks", mentions "Swift Mocking library", asks about "@MockedMembers", "@MockableProperty", or "@MockableMethod" macros, or needs guidance on protocol mocking for unit tests in Swift.
+version: 1.0.0
 ---
 
-# 
+# Swift Mocking
 
-Documentation for swift-mocking
+Swift Mocking is a macro library that automatically generates type-safe, concurrency-safe mock implementations from protocol declarations for unit testing.
 
-## Documentation Structure
+## Quick Start
 
-- **Features** ([features.md](features.md)): Swift Mocking is Swift 6 compatible, fully concurrency-safe, and generates conditionally compiled mocks that can handle:
-- **Example** ([example.md](example.md)): @Mocked(compilationCondition: .debug)
-- **Installation** ([installation.md](installation.md)): To add Swift Mocking to a Swift package manifest file:
-- **Usage** ([usage.md](usage.md)): Attach the @Mocked macro to your protocol:
-- **Macros** ([macros.md](macros.md)): Swift Mocking contains several Swift macros: @Mocked, @MockedMembers, @MockableProperty, and @MockableMethod.
-  - `@Mocked`
-  - `@MockedMembers`
-  - `@MockableProperty`
-  - `@MockableMethod`
-  - `@Mockable` vs. `@_Mocked`
-- **Contributing**
-- **License**
+| Aspect | Implementation |
+|--------|----------------|
+| Apply macro | `@Mocked(compilationCondition: .debug)` on protocol |
+| Generated mock | `{Protocol}Mock` class with backing properties |
+| Set behavior | `mock._method.implementation = .returns(value)` |
+| Verify calls | `#expect(mock._method.callCount == 1)` |
+| Check arguments | `#expect(mock._method.lastInvocation?.arg == expected)` |
 
-## Usage Notes
+## Basic Usage
 
-- Start with the main documentation sections for an overview
-- Refer to specific sections for detailed information on each topic
-- Code examples are provided throughout the documentation
+```swift
+@Mocked(compilationCondition: .debug)
+protocol WeatherService {
+    func currentTemperature(latitude: Double, longitude: Double) async throws -> Double
+}
+
+// In tests
+let mock = WeatherServiceMock()
+mock._currentTemperature.implementation = .returns(75)
+#expect(mock._currentTemperature.callCount == 1)
+```
+
+## Project Conventions
+
+- Use `@Mocked(compilationCondition: .debug)` for one-step usage
+- Import `Mocking` in test files
+- Configure behavior via backing properties (`_methodName`)
+- Verify both call counts and arguments
+- Use checked implementation constructors (`.returns()`, `.invokes()`) for Sendable types
+- Use unchecked variants (`.uncheckedReturns()`, `.uncheckedInvokes()`) only for non-Sendable types
+- Reset static members between tests with `resetMockedStaticMembers()`
+- For protocols with inheritance, use `@MockedMembers` with manual declaration
+
+## Additional Resources
+
+### Reference Files
+
+For comprehensive guidance with detailed examples, consult:
+
+- **`references/swift-mocking-basics.md`** - Complete usage guide, installation, compilation conditions, implementation constructors, and common patterns
+- **`references/best-practices.md`** - Best practices, advanced patterns, debugging strategies, common pitfalls, and testing strategies
+- **`references/macros.md`** - Detailed macro documentation for `@Mocked`, `@MockedMembers`, `@MockableProperty`, `@MockableMethod`
+- **`references/features.md`** - Complete list of supported Swift features (actors, async/await, associated types, etc.)
+- **`references/usage.md`** - Backing property API reference
+
+### Examples
+
+- **`examples/example.md`** - Working weather service example with test implementation

@@ -1,5 +1,5 @@
 {
-  "originHash" : "68a2f7a01aef64cd4a4e57b9b0364c8287d86af13ab6e504ee2c4886ad8d30f1",
+  "originHash" : "4d98590cd1e1d86be8649f2df766f66347b8aaf0a75db73169de8c5ecf56ff77",
   "pins" : [
     {
       "identity" : "flagsmith-ios-client",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "44b8ce120425f9cf53ca756f3434ca2c2696f8bd",
         "version" : "0.5.6"
+      }
+    },
+    {
+      "identity" : "purchases-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RevenueCat/purchases-ios-spm.git",
+      "state" : {
+        "revision" : "6238361173aa15a02b99de0d6c003b24fa5fa444",
+        "version" : "5.52.1"
       }
     },
     {

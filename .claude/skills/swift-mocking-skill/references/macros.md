@@ -1,5 +1,16 @@
 ## Macros
 
+## Contents
+
+- [`@Mocked`](#mocked)
+- [`@MockedMembers`](#mockedmembers)
+- [`@MockableProperty`](#mockableproperty)
+- [`@MockableMethod`](#mockablemethod)
+- [`@Mockable` vs. `@_Mocked`](#mockable-vs-mocked)
+
+---
+
+
 Swift Mocking contains several Swift macros: `@Mocked`, `@MockedMembers`, `@MockableProperty`, and `@MockableMethod`. 
 
 It also contains two internal, underscored macros (`@_MockedProperty` and `@_MockedMethod`) which are not meant to be used directly.
